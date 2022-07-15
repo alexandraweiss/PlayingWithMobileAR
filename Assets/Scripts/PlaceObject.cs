@@ -74,7 +74,8 @@ public class PlaceObject : MonoBehaviour
         {
             placementPose.position = hits[0].pose.position;
         }
-        else {
+        else 
+        {
             placementPose.position = sessionOrigin.transform.position + (cameraForward * 0.4f);
         }
         Vector3 cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
