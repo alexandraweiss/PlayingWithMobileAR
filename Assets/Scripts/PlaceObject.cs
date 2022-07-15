@@ -13,6 +13,9 @@ public class PlaceObject : MonoBehaviour
     private GameObject objectToPlace;
     private ARSessionOrigin sessionOrigin;
     private ARRaycastManager raycastManager;
+    private List<ARRaycastHit> hits;
+    private ARAnchorManager anchorManager;
+    private List<ARAnchor> anchors;
     private Pose placementPose;
     private bool poseIsValid = false;
     public InputAction tapAction;
@@ -24,10 +27,13 @@ public class PlaceObject : MonoBehaviour
     {
         raycastManager = FindObjectOfType<ARRaycastManager>();
         sessionOrigin = FindObjectOfType<ARSessionOrigin>();
+        anchorManager = FindObjectOfType<ARAnchorManager>();
         tapAction.Enable();
         touchAction.Enable();
         tapAction.performed += SpawnObject;
         touchAction.performed += TouchPerformed;
+        hits = new List<ARRaycastHit>();
+        anchors = new List<ARAnchor>();
     }
 
     private void OnDestroy()
@@ -36,6 +42,7 @@ public class PlaceObject : MonoBehaviour
         touchAction.performed -= TouchPerformed;
         tapAction.Disable();
         touchAction.Disable();
+        anchors.Clear();
     }
 
     private void Update()
@@ -53,6 +60,11 @@ public class PlaceObject : MonoBehaviour
 
     private void SpawnObject(InputAction.CallbackContext context)
     {
+        if (hits[0] == null)
+        {
+            return;
+        }
+
         GameObject newObj = Instantiate(objectToPlace);
         newObj.transform.position = placementPose.position;
         newObj.transform.rotation = placementPose.rotation;
@@ -62,11 +74,13 @@ public class PlaceObject : MonoBehaviour
             UnityEngine.Random.InitState(DateTime.UtcNow.Millisecond);
             renderer.material.color = UnityEngine.Random.ColorHSV();
         }
+        ARPlane plane = hits[0].trackable.GetComponent<ARPlane>();
+        ARAnchor anchor = anchorManager.AttachAnchor(plane, placementPose);
+        anchors.Add(anchor);
     }
 
     void UpdatePlacementPose()
     {
-        List<ARRaycastHit> hits = new List<ARRaycastHit>();
         poseIsValid = raycastManager.Raycast(touchPosition, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon);
         Vector3 cameraForward = sessionOrigin.camera.transform.forward;
         

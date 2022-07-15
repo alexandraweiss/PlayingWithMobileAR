@@ -44,7 +44,7 @@ public class Butterfly : MonoBehaviour
     {
         if (Physics.Raycast(transform.position + transform.forward * 0.05f, transform.forward, out raycastResult, rayLength))
         {
-            DebugOutput.instance.ShowMessage(Vector3.Dot(transform.forward, raycastResult.normal).ToString());
+            //DebugOutput.instance.ShowMessage(Vector3.Dot(transform.forward, raycastResult.normal).ToString());
             AvoidCollision();
         }
     }
