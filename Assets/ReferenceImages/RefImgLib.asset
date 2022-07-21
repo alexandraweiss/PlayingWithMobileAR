@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: RefImgLib
+  m_EditorClassIdentifier: 
+  m_GuidLow: 4685230982354813460
+  m_GuidHigh: 4386632872851776443
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4803369884402142580
+      m_GuidHigh: 7952036195950393484
+    m_SerializedTextureGuid:
+      m_GuidLow: 4779501867518465972
+      m_GuidHigh: 2105330728862785305
+    m_Size: {x: 0.094, y: 0.09462876}
+    m_SpecifySize: 1
+    m_Name: Sticker
+    m_Texture: {fileID: 2800000, guid: 28c117b433a04254199f94b424a3371d, type: 3}

@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 276052292}
   - component: {fileID: 276052291}
   - component: {fileID: 276052293}
+  - component: {fileID: 276052294}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -319,6 +320,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AnchorPrefab: {fileID: 0}
+--- !u!114 &276052294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276052286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedLibrary: {fileID: 11400000, guid: fa881ecf72e5ab646bb361a55e265398,
+    type: 2}
+  m_MaxNumberOfMovingImages: 1
+  m_TrackedImagePrefab: {fileID: 3491246463892413373, guid: 109611c36299f974dbf17c36cca685db,
+    type: 3}
 --- !u!1 &547400801
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +621,7 @@ GameObject:
   - component: {fileID: 1632921709}
   - component: {fileID: 1632921711}
   m_Layer: 0
-  m_Name: PlaceObject
+  m_Name: Interactions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,6 +640,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToPlace: {fileID: 891868175519688548, guid: dbaa8a9897d66b54281f7813e63ca142,
+    type: 3}
+  spawnIndicatorPrefab: {fileID: 6245519397789709453, guid: a7cf57a28c75606408f4800a8d1f5915,
     type: 3}
   tapAction:
     m_Name: Tap
@@ -782,7 +802,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -839,10 +859,10 @@ RectTransform:
   m_Father: {fileID: 1968049978}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -205, y: 148}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: -83, y: 148}
+  m_SizeDelta: {x: 156, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1968049974
 GameObject:
@@ -921,7 +941,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 31
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0

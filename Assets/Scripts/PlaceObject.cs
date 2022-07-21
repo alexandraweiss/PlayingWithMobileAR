@@ -11,11 +11,17 @@ public class PlaceObject : MonoBehaviour
 {
     [SerializeField]
     private GameObject objectToPlace;
+    [SerializeField]
+    private GameObject spawnIndicatorPrefab;
+    private GameObject spanwIndicatorObject;
+    private Vector3 pIndicatorOffset = new Vector3(0f, 0f, 0.001f);
+
     private ARSessionOrigin sessionOrigin;
     private ARRaycastManager raycastManager;
     private List<ARRaycastHit> hits;
     private ARAnchorManager anchorManager;
-    private List<ARAnchor> anchors;
+    private List<ARAnchor> anchors = new List<ARAnchor>();
+
     private Pose placementPose;
     private bool poseIsValid = false;
     public InputAction tapAction;
@@ -33,7 +39,7 @@ public class PlaceObject : MonoBehaviour
         tapAction.performed += SpawnObject;
         touchAction.performed += TouchPerformed;
         hits = new List<ARRaycastHit>();
-        anchors = new List<ARAnchor>();
+        SpawnIndicators();
     }
 
     private void OnDestroy()
@@ -53,6 +59,16 @@ public class PlaceObject : MonoBehaviour
         UpdatePlacementPose();
     }
 
+    protected void SpawnIndicators() 
+    {
+        if (spawnIndicatorPrefab == null)
+        {
+            return;
+        }
+        spanwIndicatorObject = Instantiate(spawnIndicatorPrefab);
+        spanwIndicatorObject.SetActive(false);
+    }
+
     private void TouchPerformed(InputAction.CallbackContext context) 
     {
         touchPosition = context.ReadValue<Vector2>();
@@ -60,7 +76,7 @@ public class PlaceObject : MonoBehaviour
 
     private void SpawnObject(InputAction.CallbackContext context)
     {
-        if (hits[0] == null)
+        if (hits[0] == null || objectToPlace == null)
         {
             return;
         }
@@ -68,31 +84,54 @@ public class PlaceObject : MonoBehaviour
         GameObject newObj = Instantiate(objectToPlace);
         newObj.transform.position = placementPose.position;
         newObj.transform.rotation = placementPose.rotation;
+
+        AddAnchor();
+    }
+
+    protected void AddAnchor()
+    {
+        ARPlane plane = hits[0].trackable.GetComponent<ARPlane>();
+        ARAnchor anchor = anchorManager.AttachAnchor(plane, placementPose);
+        anchors.Add(anchor);
+    }
+
+    protected void SetRandomColor(GameObject newObj)
+    {
         MeshRenderer renderer = newObj.GetComponentInChildren<MeshRenderer>();
         if (renderer != null)
         {
             UnityEngine.Random.InitState(DateTime.UtcNow.Millisecond);
             renderer.material.color = UnityEngine.Random.ColorHSV();
         }
-        ARPlane plane = hits[0].trackable.GetComponent<ARPlane>();
-        ARAnchor anchor = anchorManager.AttachAnchor(plane, placementPose);
-        anchors.Add(anchor);
     }
 
     void UpdatePlacementPose()
     {
         poseIsValid = raycastManager.Raycast(touchPosition, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon);
         Vector3 cameraForward = sessionOrigin.camera.transform.forward;
+        Vector3 cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
         
         if (poseIsValid)
         {
             placementPose.position = hits[0].pose.position;
+            if (spanwIndicatorObject != null)
+            {
+                if (!spanwIndicatorObject.activeSelf)
+                {
+                    spanwIndicatorObject.SetActive(true);
+                }
+                spanwIndicatorObject.transform.position = hits[0].pose.position + pIndicatorOffset;
+            }
+            DebugOutput.instance.ShowMessage(hits.Count.ToString());
         }
         else 
         {
             placementPose.position = sessionOrigin.transform.position + (cameraForward * 0.4f);
+            if (spanwIndicatorObject != null)
+            {
+                spanwIndicatorObject.SetActive(false);
+            }
         }
-        Vector3 cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
         placementPose.rotation = Quaternion.LookRotation(cameraBearing);
     }
 }
