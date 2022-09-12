@@ -314,8 +314,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 516609720650563038}
-  - component: {fileID: 8156652196890904595}
   - component: {fileID: 4184705377012645212}
+  - component: {fileID: 8156652196890904595}
+  - component: {fileID: 6400397798719001457}
+  - component: {fileID: 6181960000304825739}
+  - component: {fileID: 5222790337939715824}
+  - component: {fileID: 1271140890854446970}
   m_Layer: 0
   m_Name: Butterfly
   m_TagString: Untagged
@@ -354,20 +358,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8156652196890904595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 891868175519688548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b2327e78ccaac84e93f20eac455d6e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  changeTimer: 5
-  currentSpeed: 0.2
 --- !u!95 &4184705377012645212
 Animator:
   serializedVersion: 3
@@ -387,6 +377,120 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8156652196890904595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891868175519688548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2327e78ccaac84e93f20eac455d6e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: []
+  currentAction: {fileID: 0}
+--- !u!114 &6400397798719001457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891868175519688548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8d944ae1110e24094b0ebd27ea1ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTimer: 5
+  currentSpeed: 0.2
+--- !u!114 &6181960000304825739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891868175519688548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fb7521785f95b149a6d864e2e8d960d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: RandomFlight
+  cost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 5
+  preConditions: []
+  afterEffects:
+  - key: hungry
+    value: 1
+  - key: hasMoved
+    value: 1
+  - key: satiated
+    value: 0
+  running: 0
+--- !u!114 &5222790337939715824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891868175519688548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ea10fe78e91e444a36dbf05c1b9f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: FindFlower
+  cost: 1
+  target: {fileID: 0}
+  targetTag: Flower
+  duration: 0
+  preConditions:
+  - key: availableFlowers
+    value: 1
+  - key: satiated
+    value: 0
+  - key: hasMoved
+    value: 1
+  afterEffects:
+  - key: foundFlower
+    value: 1
+  - key: hungry
+    value: 1
+  running: 0
+--- !u!114 &1271140890854446970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891868175519688548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bf4d8c217b3a6f4d9dc8df75ec7d73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actionName: FeedOnFlower
+  cost: 1
+  target: {fileID: 0}
+  targetTag: 
+  duration: 3
+  preConditions:
+  - key: hungry
+    value: 1
+  - key: foundFlower
+    value: 1
+  - key: availableFlowers
+    value: 1
+  afterEffects:
+  - key: satiated
+    value: 1
+  - key: hungry
+    value: 0
+  running: 0
 --- !u!1 &953307133356765237
 GameObject:
   m_ObjectHideFlags: 0

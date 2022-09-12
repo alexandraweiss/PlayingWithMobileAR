@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: -8636252603089646839}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Flower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,4 +139,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b2327e78ccaac84e93f20eac455d6e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changeTimer: 5
+  actions: []
+  currentAction: {fileID: 0}

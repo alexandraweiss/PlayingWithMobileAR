@@ -26,6 +26,7 @@ public class PlaceObject : MonoBehaviour
     private bool poseIsValid = false;
     public InputAction tapAction;
     public InputAction touchAction;
+    public InputAction spaceKeyAction;
     private Vector2 touchPosition = new Vector2(0.5f * Screen.width, 0.5f * Screen.height);
     
 
@@ -36,8 +37,11 @@ public class PlaceObject : MonoBehaviour
         anchorManager = FindObjectOfType<ARAnchorManager>();
         tapAction.Enable();
         touchAction.Enable();
+        spaceKeyAction.Enable();
+
         tapAction.performed += SpawnObject;
         touchAction.performed += TouchPerformed;
+        spaceKeyAction.performed += SpaceKeyPerformed;
         hits = new List<ARRaycastHit>();
         SpawnIndicators();
     }
@@ -46,9 +50,11 @@ public class PlaceObject : MonoBehaviour
     {
         tapAction.performed -= SpawnObject;
         touchAction.performed -= TouchPerformed;
+        spaceKeyAction.performed -= SpaceKeyPerformed;
         tapAction.Disable();
         touchAction.Disable();
         anchors.Clear();
+        spaceKeyAction.Disable();
     }
 
     private void Update()
@@ -72,6 +78,11 @@ public class PlaceObject : MonoBehaviour
     private void TouchPerformed(InputAction.CallbackContext context) 
     {
         touchPosition = context.ReadValue<Vector2>();
+    }
+
+    private void SpaceKeyPerformed(InputAction.CallbackContext context)
+    {
+        DebugSpawn();
     }
 
     private void SpawnObject(InputAction.CallbackContext context)
@@ -133,5 +144,16 @@ public class PlaceObject : MonoBehaviour
             }
         }
         placementPose.rotation = Quaternion.LookRotation(cameraBearing);
+    }
+
+    private void DebugSpawn()
+    {
+        GameObject newObj = Instantiate(objectToPlace);
+        
+        float xValue = UnityEngine.Random.Range(0.01f, 0.15f);
+        float yValue = UnityEngine.Random.Range(0.01f, 0.15f);
+        float zValue = UnityEngine.Random.Range(0.01f, 0.15f);
+        newObj.transform.position = new Vector3(xValue, yValue, zValue);
+        newObj.transform.rotation = Quaternion.Euler(Vector3.forward);
     }
 }

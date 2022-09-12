@@ -11,7 +11,7 @@
                     "id": "8b89cb85-88e2-4308-b4fd-0f28100f06a8",
                     "expectedControlType": "Touch",
                     "processors": "",
-                    "interactions": "Tap",
+                    "interactions": "Tap(duration=0.3)",
                     "initialStateCheck": true
                 },
                 {
